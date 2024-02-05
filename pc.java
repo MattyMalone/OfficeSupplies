@@ -1,26 +1,26 @@
 
-
-public class pc
+import java.util.ArrayList;
+public class PC
 {
-    private int watts;
     private String cpu;
     private String gpu;
     private String psu;
     private int ram;
     private String Motherboard;
     private int storage;
-    private double temp;
+    private double temp = 30.0;
+    private ArrayList<String> programs;
 
 
-    public pc(int watts, String cpu, String gpu, String psu, int ram, String Motherboard, int storage)
+    public PC(String cpu, String gpu, String psu, int ram, String Motherboard, int storage)
     {
-        this.watts = watts;
         this.cpu = cpu;
         this.gpu = gpu;
         this.psu = psu;
         this.ram = ram;
-        this.motherboard = motherboard;
+        this.Motherboard = Motherboard;
         this.storage = storage;
+        programs = new ArrayList<String>();
     }
     public void runProgram(String programName, int programDurationMinutes, int rigor) 
     {
@@ -31,15 +31,15 @@ public class pc
         
         if(rigor == 1)
         {
-            temperatureIncreasePerMinute = 0.3;
+            temperatureIncreasePerMinute = 2.0;
         }
         else if(rigor == 2)
         {
-            temperatureIncreasePerMinute = 0.5;
+            temperatureIncreasePerMinute = 4.0;
         }
         else
         {
-            temperatureIncreasePerMinute = 0.8;
+            temperatureIncreasePerMinute = 8.0;
         }
         
         double temperatureCap = 0.0;
@@ -71,7 +71,6 @@ public class pc
                 System.out.println("Temperature capped at " + temperatureCap + " °C");
             }
 
-            // Display temperature
             System.out.println("Temperature: " + temp + " °C");
 
             // Check for crashing (only for rigor 3)
@@ -93,16 +92,16 @@ public class pc
     
             System.out.println("Program execution complete. Total temperature increase: " + (temp - temperatureIncreasePerMinute) + " °C");
     }
-    public void idle(int idleDurationSeconds) 
+    public void idle(int idleDurationMinutes) 
     {
    
-        double temperatureDecreasePerSecond = 0.1; 
+        double temperatureDecreasePerMinute = 20.0; 
         double minimumTemperature = 30.0; 
 
-        for (int second = 1; second <= idleDurationSeconds; second++) 
+        for (int second = 1; second <= idleDurationMinutes; second++) 
         {
          
-            temp -= temperatureDecreasePerSecond;
+            temp -= temperatureDecreasePerMinute;
 
        
             if (temp < minimumTemperature) 
@@ -121,14 +120,11 @@ public class pc
             }
         }
     }
-    public int getWatts() 
+    public void download(String program, int size)
     {
-        return watts;
-    }
-
-    public void setWatts(int watts) 
-    {
-        this.watts = watts;
+        assert storage >= size;
+        programs.add(program);
+        storage -= size;
     }
 
     public String getCpu() 
@@ -172,7 +168,26 @@ public class pc
 
     public String getMotherboard() 
     {
-        return motherboard;
+        return Motherboard;
+    }
+
+    public ArrayList<String> getPrograms()
+    {
+        return programs;
+    }
+
+    public void setStorage(int storage)
+    {
+        this.storage = storage;
+    }
+
+    public int getStorage()
+    {
+        return storage;
+    }
+    public double getTemp()
+    {
+        return temp;
     }
 }
 
