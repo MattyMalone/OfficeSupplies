@@ -1,18 +1,18 @@
 
-
-public class pc
+import java.util.ArrayList;
+public class PC 
 {
     private int watts;
     private String cpu;
     private String gpu;
     private String psu;
     private int ram;
-    private String Motherboard;
+    private String motherboard;
     private int storage;
-    private double temp;
+    private double temp = 30.0;
+    private ArrayList<String> programs;
 
-
-    public pc(int watts, String cpu, String gpu, String psu, int ram, String Motherboard, int storage)
+    public PC(int watts, String cpu, String gpu, String psu, int ram, String motherboard, int storage) 
     {
         this.watts = watts;
         this.cpu = cpu;
@@ -21,6 +21,7 @@ public class pc
         this.ram = ram;
         this.motherboard = motherboard;
         this.storage = storage;
+        programs = new ArrayList<String>();
     }
     public void runProgram(String programName, int programDurationMinutes, int rigor) 
     {
@@ -31,15 +32,15 @@ public class pc
         
         if(rigor == 1)
         {
-            temperatureIncreasePerMinute = 0.3;
+            temperatureIncreasePerMinute = 2.0;
         }
         else if(rigor == 2)
         {
-            temperatureIncreasePerMinute = 0.5;
+            temperatureIncreasePerMinute = 3.0;
         }
         else
         {
-            temperatureIncreasePerMinute = 0.8;
+            temperatureIncreasePerMinute = 5.0;
         }
         
         double temperatureCap = 0.0;
@@ -71,10 +72,9 @@ public class pc
                 System.out.println("Temperature capped at " + temperatureCap + " °C");
             }
 
-            // Display temperature
             System.out.println("Temperature: " + temp + " °C");
 
-            // Check for crashing (only for rigor 3)
+ 
             if (rigor == 3 && temp >= crashTemperature) 
             {
                 System.out.println("PC has crashed due to excessive temperature!");
@@ -91,12 +91,12 @@ public class pc
             }
         }
     
-            System.out.println("Program execution complete. Total temperature increase: " + (temp - temperatureIncreasePerMinute) + " °C");
+            System.out.println("Program execution complete. Total temperature increase: " + ((temperatureIncreasePerMinute * programDurationMinutes)) + " °C");
     }
     public void idle(int idleDurationSeconds) 
     {
    
-        double temperatureDecreasePerSecond = 0.1; 
+        double temperatureDecreasePerSecond = 1; 
         double minimumTemperature = 30.0; 
 
         for (int second = 1; second <= idleDurationSeconds; second++) 
@@ -121,6 +121,23 @@ public class pc
             }
         }
     }
+
+    public void download(String name, int size)
+    {
+        assert storage > size;
+        storage -= size;
+        programs.add(name);
+    }
+    public double getTemp() 
+    {
+        return temp;
+    }
+
+
+    public ArrayList<String> getPrograms() 
+    {
+        return programs;
+    }
     public int getWatts() 
     {
         return watts;
@@ -129,6 +146,16 @@ public class pc
     public void setWatts(int watts) 
     {
         this.watts = watts;
+    }
+
+    public int getStorage() 
+    {
+        return storage;
+    }
+
+    public void setStorage(int storage) 
+    {
+        this.storage = storage;
     }
 
     public String getCpu() 
@@ -151,7 +178,8 @@ public class pc
         this.gpu = gpu;
     }
 
-    public String getPsu() {
+    public String getPsu() 
+    {
         return psu;
     }
 
