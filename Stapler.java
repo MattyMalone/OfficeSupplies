@@ -109,4 +109,8 @@ public class Stapler
         opened = false;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d48dd3449db403dabf6b023e7b22b5c2ccd797df

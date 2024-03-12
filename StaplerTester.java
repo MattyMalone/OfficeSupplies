@@ -150,4 +150,8 @@ public class StaplerTester
         System.out.println("---------------");
         System.out.println("Tests passed: " + testsPassed + "/9");
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d48dd3449db403dabf6b023e7b22b5c2ccd797df
